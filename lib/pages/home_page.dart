@@ -66,11 +66,13 @@ class HomePage extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          Lottie.asset(
-            'assets/animations/LottieLog1.json',
-            fit: BoxFit.cover,
-            width: double.infinity,
-            height: double.infinity,
+          Positioned.fill(
+            child: Lottie.asset(
+              'assets/animations/LottieLog1.json',
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: double.infinity,
+            ),
           ),
           Center(
             child: Padding(

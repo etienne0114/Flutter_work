@@ -25,52 +25,77 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                SizedBox(height: 20.0),
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset('assets/images/bg_1.jpg', fit: BoxFit.cover),
+          ),
+          // Page content
+          Center(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    FittedBox(
+                      child: Text(
+                        'Login',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.teal,
+                          letterSpacing: 2,
+                          fontSize:
+                              40, // Adjusted the font size for better visual appeal
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20.0),
+                    TextField(
+                      controller: controllerEmail,
+                      style: TextStyle(color: Colors.white, fontSize: 20.0),
+                      decoration: InputDecoration(
+                        hintText: 'Email',
 
-                TextField(
-                  controller: controllerEmail,
-                  decoration: InputDecoration(
-                    hintText: 'Email',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      keyboardType: TextInputType.emailAddress,
                     ),
-                  ),
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                SizedBox(height: 20.0),
-                TextField(
-                  controller: controllerPassword,
-                  decoration: InputDecoration(
-                    hintText: 'Password',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                    SizedBox(height: 20.0),
+                    TextField(
+                      controller: controllerPassword,
+                      style: TextStyle(color: Colors.white, fontSize: 20.0),
+                      decoration: InputDecoration(
+                        hintText: 'Password',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      obscureText: true, // Obscure the password input
                     ),
-                  ),
-                  obscureText: true, // Obscure the password input
+                    SizedBox(height: 20.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        onLoginPressed();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.teal,
+                        shadowColor: Colors.white,
+                        minimumSize: Size(double.infinity, 40),
+                      ),
+                      child: Text(
+                        'Log In',
+                        style: TextStyle(color: Colors.white, fontSize: 30.0),
+                      ),
+                    ),
+                    SizedBox(height: 50.0),
+                  ],
                 ),
-                SizedBox(height: 20.0),
-                ElevatedButton(
-                  onPressed: () {
-                    onLoginPressed();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.teal,
-                    iconColor: Colors.white,
-                    minimumSize: Size(double.infinity, 40),
-                  ),
-                  child: Text('Log In'),
-                ),
-                SizedBox(height: 50.0),
-              ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
