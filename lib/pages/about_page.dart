@@ -1,92 +1,59 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/data_provider.dart';
 
-class AboutPage extends StatefulWidget {
+class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _AboutPageState createState() => _AboutPageState();
-}
-
-class _AboutPageState extends State<AboutPage> {
-  final List<Map<String, String>> _entries = [];
-
-  void _addEntry(String name, String regno) {
-    setState(() {
-      _entries.add({'name': name, 'regno': regno});
-    });
-  }
-
-  void _deleteEntry(int index) {
-    setState(() {
-      _entries.removeAt(index);
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final nameController = TextEditingController();
-    final regnoController = TextEditingController();
+    final dataProvider = Provider.of<DataProvider>(context);
 
     return Scaffold(
       appBar: AppBar(title: const Text('About')),
       body: Column(
         children: [
-          TextField(
-            controller: nameController,
-            decoration: const InputDecoration(labelText: 'Name'),
-          ),
-          TextField(
-            controller: regnoController,
-            decoration: const InputDecoration(labelText: 'RegNo'),
-          ),
           ElevatedButton(
             onPressed: () {
-              _addEntry(nameController.text, regnoController.text);
-              nameController.clear();
-              regnoController.clear();
+              Navigator.pushNamed(context, '/data');
             },
-            child: const Text('Add Entry'),
+            child: Text('Add Entry from Data Page'),
           ),
           Expanded(
-            child:
-                _entries.isEmpty
-                    ? const Center(child: Text('No entries added yet.'))
-                    : SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
+            child: dataProvider.entries.isEmpty
+                ? const Center(child: Text('No entries added yet.'))
+                : SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
                       child: DataTable(
+                        // border: TableBorder.all(),
                         columns: const [
-                          DataColumn(label: Text('Name')),
-                          DataColumn(label: Text('RegNo')),
-                          DataColumn(label: Text('Actions')),
+                          DataColumn(label: Text('Name', style: TextStyle(fontWeight: FontWeight.bold))),
+                          DataColumn(label: Text('Reg No', style: TextStyle(fontWeight: FontWeight.bold))),
+                          DataColumn(label: Text('Actions', style: TextStyle(fontWeight: FontWeight.bold))),
                         ],
-                        rows:
-                            _entries
-                                .asMap()
-                                .entries
-                                .map(
-                                  (entry) => DataRow(
-                                    cells: [
-                                      DataCell(Text(entry.value['name'] ?? '')),
-                                      DataCell(
-                                        Text(entry.value['regno'] ?? ''),
-                                      ),
-                                      DataCell(
-                                        IconButton(
-                                          icon: const Icon(
-                                            Icons.delete,
-                                            color: Colors.red,
-                                          ),
-                                          onPressed:
-                                              () => _deleteEntry(entry.key),
-                                        ),
-                                      ),
-                                    ],
+                        rows: dataProvider.entries.asMap().entries.map(
+                          (entry) {
+                            final index = entry.key;
+                            final value = entry.value;
+                            return DataRow(
+                              cells: [
+                                DataCell(Text(value['name'] ?? '')),
+                                DataCell(Text(value['regno'] ?? '')),
+                                DataCell(
+                                  IconButton(
+                                    icon: const Icon(Icons.delete, color: Colors.red),
+                                    onPressed: () => dataProvider.deleteEntry(index),
                                   ),
-                                )
-                                .toList(),
+                                ),
+                              ],
+                            );
+                          },
+                        ).toList(),
                       ),
                     ),
+                  ),
           ),
         ],
       ),
