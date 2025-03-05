@@ -11,7 +11,6 @@ class HomePage extends StatelessWidget {
         // title: const Text('Home'),
         title: Row(
           children: [
-            Text('HOME'),
             Expanded(
               child: Row(
                 children: [
@@ -126,36 +125,12 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
-        // actions: [
-        // IconButton(
-        //   // icon: const Icon(Icons.home, color: Colors.teal),
-        //   icon: Column(
-        //     children: const [
-        //       Icon(Icons.home, color: Colors.teal),
-        //       Text('Home', style: TextStyle(color: Colors.teal)),
-        //     ],
-        //   ),
-        //   onPressed: () => Navigator.pushNamed(context, '/home'),
-        //   tooltip: 'Home',
-        // ),
-        //   IconButton(
-        //     icon: const Icon(Icons.info, color: Colors.teal),
-        //     onPressed: () => Navigator.pushNamed(context, '/about'),
-        //     tooltip: 'About',
-        //   ),
-        //   IconButton(
-        //     icon: const Icon(Icons.data_usage, color: Colors.teal),
-        //     onPressed: () => Navigator.pushNamed(context, '/data'),
-        //     tooltip: 'Data',
-        //   ),
-        //   IconButton(
-        //     icon: const Icon(Icons.help, color: Colors.teal),
-        //     onPressed: () => Navigator.pushNamed(context, '/help'),
-        //     tooltip: 'Help',
-        //   ),
-        // ],
       ),
-      body: Stack(
+      body: Column(
+  children: [
+    const SizedBox(height: 20), // Adds space below the AppBar
+    Expanded(
+      child: Stack(
         children: [
           Positioned.fill(
             child: Lottie.asset(
@@ -173,7 +148,6 @@ class HomePage extends StatelessWidget {
                 children: [
                   DecoratedBox(
                     decoration: BoxDecoration(
-                      // ignore: deprecated_member_use
                       color: Colors.teal.withOpacity(0.8),
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -187,22 +161,16 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Container(
-                    padding: const EdgeInsets.all(16.0),
-                    // ignore: deprecated_member_use
-                    color: Colors.white.withOpacity(0.8),
-                    child: const Text(
-                      'Feel free to reach out for support or feedback. Our team is here to assist you and ensure you get the best out of our services.',
-                      style: TextStyle(fontSize: 18),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
                 ],
               ),
             ),
           ),
         ],
       ),
+    ),
+  ],
+),
+
     );
   }
 }
